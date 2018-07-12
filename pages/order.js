@@ -12,7 +12,6 @@ import {
 export default class Order extends Component{
     constructor(props){
       super(props)
-      
       this.state={
       }
     //   axios.get("https://app.dingdingkuaixiu.com/homedata").then(res=>{
@@ -29,7 +28,7 @@ export default class Order extends Component{
                 <Text>Orderfdfdf12111111</Text>
             </View>
             <View style={styles.footer}>
-        
+            
             </View>
         </View>
       );

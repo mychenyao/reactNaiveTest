@@ -25,8 +25,8 @@ export default class SwiperItem extends Component{
           <View style={styles.swiperItem}>
             <Swiper autoplay={true} loop={true} showsButtons={false}>
             {
-              this.state.slideShow.map((v,i)=><View style={styles.slide1}>
-                      <Image style={{height:200,width:Dimensions.get('window').width}} source={{"uri":v.image}}/>
+              this.state.slideShow.map((v,i)=><View key={i} style={styles.slide1}>
+                      <Image style={{height:326,width:Dimensions.get('window').width*2}} source={{"uri":v.image}}/>
                 </View>)
             }
             </Swiper>
@@ -36,7 +36,8 @@ export default class SwiperItem extends Component{
   }
   const styles = StyleSheet.create({
     swiperItem:{
-      height:200,
+      height:326,
+      width:Dimensions.get('window').width*2,
     },
     wrapper:{
 
