@@ -5,11 +5,11 @@
  */
 // import {createMaterialBottomTabNavigator} from "react-navigation-material-bottom-tabs" 
 import React, { Component } from 'react';
-import {StackNavigator,createStackNavigator} from "react-navigation"
-import {StyleSheet,View,PixelRatio,Dimensions} from 'react-native';
+import {createMaterialTopTabNavigator,TabBarBottom,createStackNavigator,TabNavigator} from "react-navigation"
+import {StyleSheet,View,PixelRatio,Dimensions,Image} from 'react-native';
 import HemeSeaver from "./pages/Page"
 import Order from "./pages/order"
-import Footer from "./pages/footer"
+import Wode from "./pages/wode"
 const pt2px = pt=>PixelRatio.getPixelSizeForLayoutSize(pt);
 const px2pt = px=>PixelRatio.roundToNearestPixel(px);
 let designSize = {width:750,height:1336};
@@ -25,39 +25,74 @@ let design_scale = designSize.width/width;
 height = height*design_scale
  
 let scale = 1/pxRatio/design_scale;
-let Route=createStackNavigator({
+
+const TabBars = createMaterialTopTabNavigator({
   Home: {
     screen: HemeSeaver,
     path: 'Home',
-    navigationOptions:{
-      title:"首页",
-      headerStyle:{
-        backgroundColor:'#00a0e9'
-    },
-    headerBackTitleStyle:{
-      color:'#666666',
-    },
-      headerTintColor:'white',
-    },
+    navigationOptions:({navigation})=>({
+      tabBarLabel:"首页",
+      tabBarIcon:({focused,tintColor})=>(
+        <View> <Image style={styles.imagesBar} source={require("./static/images/home.png")}/></View>
+     
+      )
+    }),
   },
   order:{
     screen:Order,
     path:"order",
-    navigationOptions:{
-      title:"订单"
-    }
-  }
+    navigationOptions:({navigation})=>({
+      tabBarLabel:"订单",
+      tabBarIcon:({focused,tintColor})=>(
+      <Image source={require("./static/images/wode1.png")}/>
+      )
+    }),
+  },
+  wode:{
+    screen:Wode,
+    path:"wode",
+    navigationOptions:({navigation})=>({
+      tabBarLabel:"我的",
+      tabBarIcon:({focused,tintColor})=>(
+      <Image source={require("./static/images/wode1.png")}/>
+      )
+    }),
+  },
+},
+ { 
+    tabBarCompact:TabBarBottom, 
+    tabBarVisible:false, 
+    tabBarPosition:'bottom',
+    swipeEnabled:false, 
+    animationEnabled:false,
+     lazy:true, 
+     tabBarOptions:{ 
+       activeTintColor:'#06c1ae', 
+       inactiveTintColor:'#979797', 
+       style:{
+         backgroundColor:'#fff',
+         width:win_width*2
+      },
+      labelStyle:{
+         fontSize: 30,
+         height:100,
+         }
+    //   // 文字大小 
+    }, 
+  },
+)
+let Route=createStackNavigator({
+  appHome:TabBars
 })
 export default class App extends Component{
   constructor(props){
     super(props)
-    // console.log(createMaterialBottomTabNavigator)
   }
   render() {
     return ( 
       <View style={styles.box}>
         <Route/>
-        <Footer navigation={Route.navigation} />
+        {/* <Footer navigation={Route.navigation} /> */}
       </View>
     );
   }
@@ -73,5 +108,9 @@ const styles = StyleSheet.create({
                     {scale:scale},
                     {translateX:width*.5},
                     {translateY:height*.5}]
+  },
+  imagesBar:{
+    width:40,
+    height:40,
   }
 })

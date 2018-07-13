@@ -37,12 +37,16 @@ export default class HemeSeaver extends Component{
     constructor(props){
       super(props)
       this.state={
-        slideShow:[]
+        imagesData:{}
       }
-     
+      axios.get("https://app.dingdingkuaixiu.com/homedata").then(res=>{
+        const data=res.data.result;
+        this.setState({imagesData:data})
+        // console.log(this.state.imagesData.promotionA[0].image)
+    })
     }
     render() {
-    
+  
       return ( 
         // <ScrollView>
           <View style={styles.app}>
@@ -67,16 +71,17 @@ export default class HemeSeaver extends Component{
             </View>
             <View style={styles.activity}>
               <View style={styles.leftContainer}>
-                <Image style={styles.images} source={{uri:"https://image.dingdingkuaixiu.com/image/201806201829057854539.png"}}></Image>
+                <Image style={styles.images} source={{uri:"https://image.dingdingkuaixiu.com/image/201806201829057854539.png"}}> <Text style={styles.muText}> 家庭换新装</Text></Image>
               </View>
               <View style={styles.rightContainer}>
                 <View style={styles.rightContainerTop}>
+                {!!this.state.imagesData.promotionA?<Image  style={styles.imagesB} source={{uri:this.state.imagesData.promotionB[0].image}}></Image>:<Text></Text>}
                 </View>
                 <View style={styles.rightContainerBottom}>
+                {!!this.state.imagesData.promotionA?<Image  style={styles.imagesB} source={{uri:this.state.imagesData.promotionC[0].image}}></Image>:<Text></Text>}
                 </View>
               </View>
             </View>
-           
           </View>
           // </ScrollView>
           // https://image.dingdingkuaixiu.com/image/201803302344091918006.png
@@ -119,39 +124,47 @@ export default class HemeSeaver extends Component{
      overflow:"hidden",
      flexDirection:'row',
     },
+    muText:{
+      position:"absolute",
+      top:20,
+      left:23,
+      height:20,
+      width:30,
+      backgroundColor:"red"
+    },
     leftContainer:{
       width:286,
+      position:"relative",
       height:461,
       marginLeft:10,
       marginRight:10,
     },
     rightContainer:{
-      flex:1,
-      flexDirection:'row',
+   
     },
     rightContainerTop:{
-      backgroundColor:"pink",
       width:421,
-      
       height:224,
     },
     rightContainerBottom:{
-      backgroundColor:"red",
       width:421,
       height:224,
+      marginTop:16,
     },
     textStyle:{
       flex:1,
       textAlign:'center', 
       lineHeight:55,
-      // justifyContent:"center",
-      // alignItems:"center",
     },
     mumeFontSize: {
       fontSize:28,
       textAlign:"center",
       lineHeight:48,
       color:"#000",
+    },
+    imagesB:{
+      width:421,
+      height:224,
     },
     app:{
     //  width:width,
